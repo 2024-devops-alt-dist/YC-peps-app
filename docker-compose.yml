@@ -2,7 +2,7 @@ name: peps
 services:
   postgres:
     image: postgres:16-alpine 
-    container_name: peps-api
+    container_name: peps-bdd
     restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -12,6 +12,21 @@ services:
       - "5432:5432"
     volumes:
       - postgresdata:/var/lib/postgresql/data # Volume pour stocker les données. nom_du_volume:emplacement_dans_le_container           
+
+  api:
+    build: ./api # Chemin vers le Dockerfile de l'API
+    container_name: peps-api
+    ports:
+      - "8080:8080"
+    depends_on: # Nom du service duquel on dépend
+      - postgres
+    restart: unless-stopped
+    environment: 
+      DB_HOST: postgres # Nom du service de la base de données
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
 
 volumes:
   postgresdata:
