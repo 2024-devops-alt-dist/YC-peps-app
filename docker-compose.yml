@@ -35,12 +35,18 @@ services:
       - ~/.m2:/root/.m2 # Pour persister le cache Maven
 
   client:
-    build: ./client # Chemin vers le Dockerfile du client
+    build:
+      context: ./client # Chemin vers le Dockerfile du client
+      target: dev
     container_name: peps-client
+    volumes:
+      - ./client:/app
+      - /app/node_modules
     ports:
-      - "4200:80"
+      - "4200:4200"
     depends_on:
       - api
+    command: ["sh", "-c", "npm install && npm start"]
 
 volumes:
   postgresdata:
