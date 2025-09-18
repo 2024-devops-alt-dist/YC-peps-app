@@ -22,7 +22,7 @@ public class HealthService {
             Integer one = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
             if (one != null && one == 1) {
                 return ResponseEntity.ok(
-                        Map.of("status", "ok", "message", "API prout prout"));
+                        Map.of("status", "ok", "message", "API prout prod !!!"));
             }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     Map.of("status", "error", "message", "Unexpected DB result"));

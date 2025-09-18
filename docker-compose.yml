@@ -14,7 +14,9 @@ services:
       - postgresdata:/var/lib/postgresql/data # Volume pour stocker les données. nom_du_volume:emplacement_dans_le_container           
 
   api:
-    build: ./api # Chemin vers le Dockerfile de l'API
+    build:
+      context: ./api # Chemin vers le Dockerfile de l'API
+      target: dev # Spécifie l'étape de build à utiliser
     container_name: peps-api
     ports:
       - "8080:8080"
@@ -22,11 +24,23 @@ services:
       - postgres
     restart: unless-stopped
     environment: 
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
       DB_HOST: postgres # Nom du service de la base de données
       DB_PORT: 5432
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+    volumes:
+      - ./api:/app # monte ton code source
+      - ~/.m2:/root/.m2 # Pour persister le cache Maven
+
+  client:
+    build: ./client # Chemin vers le Dockerfile du client
+    container_name: peps-client
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
 
 volumes:
   postgresdata:
