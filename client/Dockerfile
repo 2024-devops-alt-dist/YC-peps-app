@@ -3,22 +3,25 @@ FROM node:22-alpine AS dev
 
 WORKDIR /app
 
-# Installer dépendances
+# Installer les dépendances globales nécessaires
+RUN npm install -g @angular/cli
+
+# Copier seulement package.json pour installer les dépendances
 COPY package*.json ./
+
+# Installer les dépendances
 RUN npm ci
 
-# Copier le code source
-COPY . .
+# Monter le code source via Docker Compose
+VOLUME [ "/app" ]
 
-# Exposer le port Angular par défaut
 EXPOSE 4200
 
-# Commande dev : hot reload avec ng serve
 CMD ["npm", "run", "start"]
 
 
-# Étape 1 : build Angular avec Node 22
 # ---- Stage BUILD ----
+# Étape 1 : build Angular avec Node 22
 FROM node:22-alpine AS build
 
 WORKDIR /app
