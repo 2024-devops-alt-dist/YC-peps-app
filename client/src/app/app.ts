@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HealthService } from './Services/health-service';
+import { HealthService } from './Services/HealthService/health-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

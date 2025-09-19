@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, Signal } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +14,14 @@ export class HealthService {
   tryConnexion() {
     this.http.get<{ status: string; message: string }>(`${this.API_URL}/api/health`).subscribe({
       next: (data) => {
-        this.apiState.set('API is healthy');
+        this.apiState.set(data.message);
         console.log('API is healthy:', data);
       },
       error: (error) => {
-        this.apiState.set('API is not reachable');
+        this.apiState.set('API is not tapis tapis gris :(');
         console.error('API is not reachable:', error);
       },
     });
   }
+
 }
