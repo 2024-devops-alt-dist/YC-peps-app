@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint-angular:
+      root: "client"
+      run: "npm run lint"
+      fail_text: "Répare grognasse !"
+    format-angular:
+      root: "client"
+      run: "npm run format"
+      fail_text: "Erreur de formattage, pov' tâche !"
+    lint-java:
+      root: "api"
+      run: "mvn spotless:check"
+      fail_text: "Répare grognasse !"
+
+post-commit:
+  commands:
+    success-message:
+      # Peut être n'importe quelle commande shell
+      run: echo "🎉 Eh voilà, c'est envoyé!"
