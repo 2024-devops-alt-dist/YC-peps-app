@@ -23,9 +23,10 @@ public class HealthService {
             if (one != null && one == 1) {
                 return ResponseEntity.ok(
                         Map.of("status", "ok", "message", "API prout prod !!!"));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                        Map.of("status", "error", "message", "Unexpected database response"));
             }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    Map.of("status", "error", "message", "Unexpected DB result"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     Map.of("status", "error", "message", "Database connection failed"));
