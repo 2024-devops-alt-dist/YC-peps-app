@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HealthService } from './Services/health-service';
 
 @Component({
   selector: 'app-root',
@@ -9,23 +10,12 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css',
 })
 export class App {
-  public apiState = signal('client');
-  public API_URL : string = 'http://localhost:8080';
+  public apiState = signal('Tester la connexion à l\'API');
 
-  // constructor(
-  //   private http: HttpClient,
-  // ) {}
+  constructor(private healthService: HealthService) {}
 
-  // tryConnexion() {
-  //   this.http.get<Map<string, string>>('/api/health').subscribe({
-  //     next: (data) => {
-  //       this.apiState.set('API is healthy');
-  //       console.log('API is healthy:', data);
-  //     },
-  //     error: (error) => {
-  //       this.apiState.set('API is not reachable');
-  //       console.error('API is not reachable:', error);
-  //     }
-  //   });
-  // }
+  callConnexion() {
+    this.healthService.tryConnexion();
+    this.apiState = this.healthService.apiState;
+  }
 }
