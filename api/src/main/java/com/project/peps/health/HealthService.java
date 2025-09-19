@@ -22,14 +22,14 @@ public class HealthService {
             Integer one = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
             if (one != null && one == 1) {
                 return ResponseEntity.ok(
-                        Map.of("status", "ok", "message", "API prout prod !!!"));
+                        Map.of("status", "ok", "message", "Pomme d'API, tapis tapis gris"));
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                        Map.of("status", "error", "message", "Unexpected database response"));
+                        Map.of("status", "error", "message", "C'est cassé et on sait pas pourquoi"));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    Map.of("status", "error", "message", "Database connection failed"));
+                    Map.of("status", "error", "message", "La base de données te demande d'aller voir ailleurs si elle y est"));
         }
     }
 }
